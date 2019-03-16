@@ -39,6 +39,8 @@ Catch.try(async () => {
       window.location.reload();
     }));
 
+    $('.action_test_naughty_strings').click(Ui.event.handle(() => Settings.redirectSubPage(acctEmail, parentTabId, '/chrome/settings/modules/naughty_strings.htm')));
+
     $('.action_open_compatability').click(Ui.event.handle(() => Settings.redirectSubPage(acctEmail, parentTabId, '/chrome/settings/modules/compatability.htm')));
 
     $('.action_open_decrypt').click(Ui.event.handle(() => Settings.redirectSubPage(acctEmail, parentTabId, '/chrome/settings/modules/decrypt.htm')));
