@@ -2,13 +2,12 @@
 
 'use strict';
 
-import { Catch } from '../../../js/common/platform/catch.js'; ';
+import { Catch } from '../../../js/common/platform/catch.js';
 import { Ui, Xss } from '../../../js/common/browser.js';
 
 declare const openpgp: typeof OpenPGP;
 
 Catch.try(async () => {
-
   const genKey = await openpgp.generateKey({ userIds: [{ name: 'naughty_strings_test' }] });
   const prv = genKey.key;
   let testIndex: number;
@@ -38,14 +37,13 @@ Catch.try(async () => {
 
   const appendOutput = (index: number, str: string, dec: OpenPGP.DecryptMessageResult) => {
     if (str === dec.data) {
-      output += Xss.escape(`[${index}] -- Success: string ${str} was decrypted successfully \n`);
+      output += Xss.escape(`[${index}] -- Success: string "${str}" was decrypted successfully \n`);
     } else {
-      output += Xss.escape(`[${index}] -- Failure: string ${str} was not decrypted \m`);
+      output += Xss.escape(`[${index}] -- Failure: string "${str}" was not decrypted \m`);
     }
   };
 
 })();
-
 
 // Base64 encoded list of naughty strings!!
 const naughtyStrings = [
