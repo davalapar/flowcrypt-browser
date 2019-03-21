@@ -19,6 +19,7 @@ Catch.try(async () => {
     $('pre').css("display", "block");
     for (const a of naughtyStrings) {
       const str = atob(a);
+      console.log(str);
       try {
         const encryptedMsg = await openpgp.encrypt({ message: openpgp.message.fromText(str), publicKeys: prv.toPublic(), armor: true });
         console.log("E: ", encryptedMsg);
