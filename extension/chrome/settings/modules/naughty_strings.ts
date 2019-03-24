@@ -24,8 +24,6 @@ Catch.try(async () => {
     testIndex = 1;
     output = "";
     $('pre').css("display", "block");
-    $('div#spinner').append(Ui.spinner('white'));
-    $('div#spinner').removeClass('display_none');
     for (const str of naughtyStrings) {
       try {
         const encryptedMsg = await openpgp.encrypt({ message: openpgp.message.fromText(str), publicKeys: prv.toPublic(), armor: true });
@@ -41,8 +39,6 @@ Catch.try(async () => {
       testIndex++;
     }
     Xss.sanitizeAppend('pre', output);
-
-    $('div#spinner').addClass('display_none');
   }));
 
   const appendOutput = (index: number, str: string, dec: OpenPGP.DecryptMessageResult) => {
