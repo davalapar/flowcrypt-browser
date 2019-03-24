@@ -9,8 +9,8 @@ declare const openpgp: typeof OpenPGP;
 
 let naughtyStrings: string[];
 $.ajax({ dataType: 'json', url: 'https://raw.githubusercontent.com/minimaxir/big-list-of-naughty-strings/master/blns.json' })
-  .done((result) => {
-    naughtyStrings = result; // tslint:disable:no-unsafe-any
+  .done((result: string[]) => {
+    naughtyStrings = result;
   });
 
 Catch.try(async () => {
