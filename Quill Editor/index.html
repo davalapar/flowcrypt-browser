@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<!-- Add the theme's stylesheet -->
+<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.bubble.css">
+<style>
+.ql-picker.ql-size .ql-picker-label[data-value="14px"]::before,
+.ql-picker.ql-size .ql-picker-item[data-value="14px"]::before {
+    content: '14px';
+}
+
+.ql-picker.ql-size .ql-picker-label[data-value="16px"]::before,
+.ql-picker.ql-size .ql-picker-item[data-value="16px"]::before {
+    content: '16px';
+}
+
+.ql-picker.ql-size .ql-picker-label[data-value="18px"]::before,
+.ql-picker.ql-size .ql-picker-item[data-value="18px"]::before {
+    content: '18px';
+}
+
+</style>
+</head>
+<body>
+    <button id="add_picture">Add picture</button>
+    <div id="editor" style="margin: 100px 20%; border: 1px solid gray; "></div>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="./image-resize.min.js"></script>
+    <script>
+        var toolbarOptions = [
+        [{'font':  ['sans-serif', 'serif', 'monospace'] }],
+	    ['bold', 'italic', 'underline'],        // toggled buttons
+	    ['link'],           // custom button values
+	    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'size': ['14px', '16px', '18px',] }],
+    ];
+
+
+    let FontStyle = Quill.import('attributors/style/font');
+    let SizeStyle = Quill.import('attributors/style/size');  
+    
+    FontStyle.whitelist = ['sans-serif', 'serif', 'monospace']
+    SizeStyle.whitelist = ['14px', '16px', '18px'];
+    Quill.register(FontStyle, true);
+    Quill.register(SizeStyle, true);
+    var quill = new Quill('#editor', {
+        theme: 'bubble',
+        placeholder: 'Looks good',
+        modules: {
+            imageResize: {},
+            toolbar: toolbarOptions
+        } 
+    });
+    quill.format('font', 'sans-serif')
+    quill.format('size', '14px')
+
+    $('#add_picture').click((e) => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+    input.onchange = async function() {
+      const file = input.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+         const range = quill.getSelection() || 0;
+          quill.insertEmbed(range.index, 'image', reader.result); 
+      };
+    }.bind(this);
+    });
+    </script>
+</body>
+</html>
